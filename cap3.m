@@ -1,38 +1,38 @@
-IMG 3.8
+%IMG 3.8
 
->> img = imread('Fig0308(a)(fractured_spine).jpg');
->> subplot(2,2,1)
->> imshow(img)
->> title('Sem correção')
->> subplot(2,2,2)
->> g6 = imadjust(img,[],[],0.6);
->> imshow(g6)
->> title('gamma 0.6')
->> subplot(2,2,3)
->> g4 = imadjust(img,[],[],0.4);
->> imshow(g4)
->> title('gamma 0.4')
->> subplot(2,2,4)
->> g3 = imadjust(img,[],[],0.3);
->> imshow(g3)
->> title('gamma 0.3')
+img = imread('Fig0308(a)(fractured_spine).jpg');
+subplot(2,2,1)
+imshow(img)
+title('Sem correção')
+subplot(2,2,2)
+g6 = imadjust(img,[],[],0.6);
+imshow(g6)
+title('gamma 0.6')
+subplot(2,2,3)
+g4 = imadjust(img,[],[],0.4);
+imshow(g4)
+title('gamma 0.4')
+subplot(2,2,4)
+g3 = imadjust(img,[],[],0.3);
+imshow(g3)
+title('gamma 0.3')
 
 
 ==========================================================
 
-IMG 3.12
->> subplot(1,3,1)
->> imshow(img)
->> subplot(1,3,2)
->> t1 = fatiamento(img,140,250,255);
->> imshow(t1)
->> subplot(1,3,3)
->> t2 = binariza(img,140,250,255);
->> imshow(t2)
+%IMG 3.12
+subplot(1,3,1)
+imshow(img)
+subplot(1,3,2)
+t1 = fatiamento(img,140,250,255);
+imshow(t1)
+subplot(1,3,3)
+t2 = binariza(img,140,250,255);
+imshow(t2)
 
 #binariza
 
-function img = fatiamento(img,l_inferior,l_superior,valor)
+function img = binariza(img,l_inferior,l_superior,valor)
   [r,c] = size(img);
  for linha=1:r
     for coluna=1:c
@@ -64,15 +64,16 @@ endfunction
 =======================================================================
 
 
-IMG 3.14
+%IMG 3.14
 
->> subplot(3,3,1)
->> imshow(plano)
->> k = [1 2 3 4 5 6 7 8];
->> for i=1:length(k)
-aux = plano_bit(plano,i);
-subplot(3,3,i+1)
-imshow(aux)
+plano = imread("Fig0314(a)(100-dollars).jpg");
+subplot(3,3,1)
+imshow(plano)
+k = [1 2 3 4 5 6 7 8];
+for i=1:length(k)
+  aux = plano_bit(plano,i);
+  subplot(3,3,i+1)
+  imshow(aux)
 endfor
 
 ##Plano de Bits
@@ -95,40 +96,40 @@ endfunction
 
 ============================================================================
 
-IMG 3.20
+%IMG 3.20
 
->> img1 = imread('Fig0320(1)(top_left).jpg');
->> img2 = imread('Fig0320(2)(2nd_from_top).jpg');
->> img3 = imread('Fig0320(3)(third_from_top).jpg');
->> img4 = imread('Fig0320(4)(bottom_left).jpg');
->> subplot(4,3,1)
->> imshow(img1)
->> img1_eq = histeq(img1);
->> subplot(4,3,2)
->> imshow(img1_eq)
->> subplot(4,3,3)
->> imhist(img1_eq)
->> subplot(4,3,4)
->> imshow(img2)
->> img2_eq = histeq(img2);
->> subplot(4,3,5)
->> imshow(img2_eq)
->> subplot(4,3,6)
->> imhist(img2_eq)
->> subplot(4,3,7)
->> imshow(img3)
->> img3_eq = histeq(img3);
->> subplot(4,3,8)
->> imshow(img3_eq)
->> subplot(4,3,9)
->> imhist(img3_eq)
->> subplot(4,3,10)
->> imshow(img4)
->> img4_eq = histeq(img4);
->> subplot(4,3,11)
->> imshow(img4_eq)
->> subplot(4,3,12)
->> imhist(img4_eq)
+img1 = imread('Fig0320(1)(top_left).jpg');
+img2 = imread('Fig0320(2)(2nd_from_top).jpg');
+img3 = imread('Fig0320(3)(third_from_top).jpg');
+img4 = imread('Fig0320(4)(bottom_left).jpg');
+subplot(4,3,1)
+imshow(img1)
+img1_eq = histeq(img1);
+subplot(4,3,2)
+imshow(img1_eq)
+subplot(4,3,3)
+imhist(img1_eq)
+subplot(4,3,4)
+imshow(img2)
+img2_eq = histeq(img2);
+subplot(4,3,5)
+imshow(img2_eq)
+subplot(4,3,6)
+imhist(img2_eq)
+subplot(4,3,7)
+imshow(img3)
+img3_eq = histeq(img3);
+subplot(4,3,8)
+imshow(img3_eq)
+subplot(4,3,9)
+imhist(img3_eq)
+subplot(4,3,10)
+imshow(img4)
+img4_eq = histeq(img4);
+subplot(4,3,11)
+imshow(img4_eq)
+subplot(4,3,12)
+imhist(img4_eq)
 
 
 #Equalização
@@ -156,64 +157,66 @@ endfunction
 
 =============================================================================
 
-IMG 3.33 
-
->> img = imread('Fig0333(a)(test_pattern_blurring_orig).jpg');
->> subplot(3,2,1)
->> imshow(img)
->> subplot(3,2,2)
->> mask3 = imfilter(img, ones(3)/9, 'symmetric');
->> imshow(mask3)
->> subplot(3,2,3)
->> mask5 = imfilter(img, ones(5)/25, 'symmetric');
->> imshow(mask5)
->> subplot(3,2,4)
->> mask9 = imfilter(img, ones(9)/9, 'symmetric');
->> imshow(mask5)
->> subplot(3,2,5)
->> mask15 = imfilter(img, ones(15)/225, 'symmetric');
->> imshow(mask15)
->> subplot(3,2,6)
->> mask35 = imfilter(img, ones(35)/1225, 'symmetric');
->> imshow(mask35)
->>
-================================================================================
-IMG 3.34
-
->> img = imread('Fig0334(a)(hubble-original).jpg');
->> subplot(1,3,1)
->> imshow(img)
->> subplot(1,3,2)
->> media = imfilter(img,ones(15)/1225,'symmetric');
->> imshow(media)
->> subplot(1,3,3)
->> bin = binariza(img,140,200,255);
->> imshow(bin)
+%IMG 3.25
 
 
+=============================================================================
+%IMG 3.26
 
+=============================================================================
 
+%IMG 3.33 
 
-
+img = imread('Fig0333(a)(test_pattern_blurring_orig).jpg');
+subplot(3,2,1)
+imshow(img)
+subplot(3,2,2)
+mask3 = imfilter(img, ones(3)/9, 'symmetric');
+imshow(mask3)
+subplot(3,2,3)
+mask5 = imfilter(img, ones(5)/25, 'symmetric');
+imshow(mask5)
+subplot(3,2,4)
+mask9 = imfilter(img, ones(9)/9, 'symmetric');
+imshow(mask5)
+subplot(3,2,5)
+mask15 = imfilter(img, ones(15)/225, 'symmetric');
+imshow(mask15)
+subplot(3,2,6)
+mask35 = imfilter(img, ones(35)/1225, 'symmetric');
+imshow(mask35)
 
 ================================================================================
+%IMG 3.34
 
-IMG 3.35
+img = imread('Fig0334(a)(hubble-original).jpg');
+subplot(1,3,1)
+imshow(img)
+subplot(1,3,2)
+media = imfilter(img,ones(15)/1225,'symmetric');
+imshow(media)
+subplot(1,3,3)
+bin = binariza(img,140,200,255);
+imshow(bin)
 
->> img = imread('Fig0335(a)(ckt_board_saltpep_prob_pt05).jpg');
->> subplot(1,3,1)
->> imshow(img)
->> subplot(1,3,2)
->> media = imfilter(img, ones(3)/9, 'symmetric');
->> imshow(media)
->> subplot(1,3,3)
->> mediana = medfilt2(img,[3 3]);
->> imshow(mediana)
+================================================================================
+
+%IMG 3.35
+
+img = imread('Fig0335(a)(ckt_board_saltpep_prob_pt05).jpg');
+subplot(1,3,1)
+imshow(img)
+subplot(1,3,2)
+media = imfilter(img, ones(3)/9, 'symmetric');
+imshow(media)
+subplot(1,3,3)
+mediana = medfilt2(img,[3 3]);
+imshow(mediana)
 
 
 ===================================================================================
 
-IMG 3.38
+%IMG 3.38
 
 %Cria a matriz do Laplaciano, como da Fig 3.37 do livro
 lap = [0, 1, 0; 1, -4, 1; 0, 1, 0];
@@ -254,11 +257,14 @@ imshow(IMAGE_AGUCADA)
 subplot(2,3,5);
 imshow(IMAGE_AGUCADA_8)
 
+==========================================================================================
+%IMG 3.42
 
 ==========================================================================================
 
-IMG 3.43
+%IMG 3.43
 
+img = imread('Fig0343(a)(skeleton_orig).tif');
 subplot(2,4,1);
 imshow(img);
 title('(a)Imagem Original');
@@ -317,3 +323,36 @@ subplot(2,4,8);
 imshow(img);
 title('(h)Transf. Potencia y = 0,5');
 
+ 
+#  %% Figura 3.43
+#  img = imread('Fig0343(a)(skeleton_orig).tif');
+#  % Imagem original
+#  subplot(2,4,1);
+#  imshow(img);
+#  title('(a)Imagem Original');
+#  % Mascara Laplaciano item 3.37 (d)
+#  mask = [1 1 1; 1 -8 1; 1 1 1];
+#  % Aplica a mascara a imagem
+#  imgL = filter2(mask, img);
+#  % Faz o ajuste na imagem
+#  imgLA = imgL+abs(min(imgL(:)));
+#  subplot(2,4,2);
+#  imshow(uint8(imgLA));
+#  title('(b)Laplaciano(a)+Ajuste');
+#  % Agucamento a + b
+#  subplot(2,4,3);
+#  imgAB = img + uint8(imgL);
+#  imshow(imgAB);
+#  title('(c)Agucamento a + b ');
+#  % Gradiente de Sobel fig 3.41(d)
+#  maskx = [-1 -2 -1;0 0 0;1 2 1];
+#  % calcula |Gx|
+#  Gx = abs(filter2(mask, img));
+#  % Gradiente de Sobel fig 3.41(e)
+#  mask = [-1,0,1;-2,0,2;-1,0,1];
+#  % calcula |Gy|
+#  Gy = abs(filter2(mask, img));
+#  % Gradiente de Sobel: |Gx|+|Gy|
+#  imgS = uint8(Gx+Gy);
+#  subplot(2,4,4);
+#  imshow(imgS);
