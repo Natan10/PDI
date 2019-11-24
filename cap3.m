@@ -153,6 +153,9 @@ function img = equalize(img)
   
 endfunction
 
+=============================================================================
+%IMG 3.24
+
 
 
 =============================================================================
@@ -163,7 +166,68 @@ endfunction
 =============================================================================
 %IMG 3.26
 
+imgA = imread("Fig0326(a)(embedded_square_noisy_512).jpg");
+
+%Equalização global de histograma
+imgB = histeq(imgA);
+
+%Equalização local de histograma
+imgC = blockproc(imgA,[3 3],@histeq);
+
+subplot(1,3,1)
+imshow(imgA)
+subplot(1,3,2)
+imshow(imgAB)
+subplot(1,3,3)
+imshow(imgC)
+
+
 =============================================================================
+
+%% Figura 3.27 - Realce local utilizando estatísticas de histograma.
+src = imread("../pics/chapter_3/Fig0327(a)(tungsten_original).tif");
+
+%Img equalizada globalmente
+src_eq = histeq(src);
+
+%Img equalizada estatisticamente
+E = 4.0;
+K0 = 0.4;
+K1 = 0.02;
+K2 = 0.4;
+
+mean_g = mean2(src);
+std_g = std2(src);
+
+mean_xy = conv2(src, ones(3)/9, 'same');
+std_xy = stdfilt(src);
+
+[rows, columns] = size(src);
+
+out_img = zeros(rows,columns);
+
+for i = 1:rows
+    for j = 1:columns
+        
+        if mean_xy(i,j) <= K0*mean_g && K1*std_g <= std_xy(i,j) <= K2*std_g
+            out_img(i,j) = E*src(i,j);
+        else
+            out_img(i,j) = src(i,j);
+        end
+    end
+end
+
+out_img = uint8(out_img);
+
+figure; 
+subplot(1,3,1);
+imshow(src);
+subplot(1,3,2);
+imshow(src_eq);
+subplot(1,3,3);
+imshow(out_img);
+
+========================================================================
 
 %IMG 3.33 
 
