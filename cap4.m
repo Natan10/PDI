@@ -151,8 +151,9 @@ subplot(2,3,6),imshow(mat2gray(abs(imgF)));
 =====================================================================================================
 
 %% Figura 4.31 - Ilustração do aliasing em imagens reamostradas.
+pkg load image
 
-src = double(imread('../pics/chapter_4/Fig0431(d)(blown_ic_crop).tif'));
+src = double(imread('Fig0431.jpg'));
 
 [rows, cols] = size(src);
 
@@ -182,7 +183,7 @@ imshow(f, []);
 
 %% Figura 4.32 - Ilustração do aliasing em imagens reamostradas.
 
-src = imread('../pics/chapter_4/Fig0432(a)(square_original).tif');
+src = imread('Fig0432.jpg');
 
 [rows, cols] = size(src);
 
@@ -214,8 +215,8 @@ imshow(c);
 
 %IMG 4.36
 
-img36 = imread('.\jpg\Fig0431.jpg');
-imshow(img36,[0,255]);
+img36 = imread('Fig0431.jpg');
+#imshow(img36,[0,255]);
 % item b) preencher a imagem  / Passos 1  e 2       %%%%%%%%
 N = size(img36)(1);
 M = size(img36)(2);
@@ -226,7 +227,7 @@ fp = zeros(P,Q);
 
 
 f = img36;
-imshow(f,[0,255])
+#imshow(f,[0,255])
 
 
 % item c)  multiplicar por (-1)^(x+y) / Passo 3 %%%%%%%%
@@ -237,26 +238,26 @@ for i = 1:P
         fp(i,j) = fp(i,j)*((-1)^(i+j));
   endfor
 endfor
-imshow(fp, [0,255])
+#imshow(fp, [0,255])
 
 
 % item d) Espectro de c)     / Passo 4        %%%%%%%%
 % Calculo da DFT de fp(a imagem original com padding)                                        
 Fp = fft2(fp);
-imshow(log(1+abs(Fp)), [])
+#imshow(log(1+abs(Fp)), [])
 
 % item e)        Filtro real H    / Passo 5.1   %%%%%%%%
 % Criação do Filtro Passa Baixa Gaussiano                                        
 sigma = 20;
 H = fspecial ("gaussian", [P,Q],sigma);
-imshow(H,[])
+#imshow(H,[])
 
 
 % item f)          / Passo 5.2                  %%%%%%%%
 % Aplicação do Filtro H na imagem Fp , que está no domínio da frequência, para a criação da nova imagem, Gp                                      
 
 Gp = H.*Fp;
-imshow(log(1+abs(Gp)),[])
+#imshow(log(1+abs(Gp)),[])
 
 % item g)           / Passo 6                   %%%%%%%%
 % Retorno para o domínio do tempo, sendo extraido apenas a parte real da Transformada Inversa da Gp, para gerar gp
@@ -268,12 +269,22 @@ for i = 1:P
   endfor
 endfor
 
-imshow(gp, [])
+#imshow(gp, [])
 
 % item h)          / Passo 7                   %%%%%%%%
 % Extração da parte esquerda superior da imagem, para retornar ao seu tamanho s                                         
 g = gp(1:M,1:N);
-imshow(g, [])
+#imshow(g, [])
+
+
+subplot(3,3,1),imshow(img36,[0,255]);
+subplot(3,3,2),imshow(f,[0,255]);
+subplot(3,3,3),imshow(fp,[0,255]);
+subplot(3,3,4),imshow(log(1+abs(Fp)), []);
+subplot(3,3,5),imshow(H,[]);
+subplot(3,3,6),imshow(log(1+abs(Gp)),[]);
+subplot(3,3,7),imshow(gp, []);
+subplot(3,3,8),imshow(g, []);
 
 
 ============================================================================
@@ -301,7 +312,7 @@ imshow(log(1+img38b),[])
 
 %IMG 4.39
 
-src = imread('../pics/chapter_4/Fig0438(a)(bld_600by600).tif');
+src = imread('../../imagens-pdi/images_chapter_04/Fig0438.jpg');
 h = [[-1 0 -1], [ -2 0 2], [-1 0 1]];
 
 PQ = paddedsize(size(src));
@@ -311,7 +322,7 @@ f = double(padarray(src,[(PQ(1)-rows)/2 (PQ(2)-cols)/2]));
 
 [rows, cols] = size(h);
 h = padarray(h,[floor((PQ(1)-rows)/2) floor((PQ(2)-cols)/2)]);
-h = padarray(h,[1 1],0,'pos');
+h = padarray(h,[1 1],0,'post');
 
 F = fft2(f);
 H = fft2(h);
@@ -326,14 +337,13 @@ imshow(abs(H), [])
 
 %% Figura 4.41 - Espectro de Fourier
 
-src = imread('../pics/chapter_4/Fig0441(a)(characters_test_pattern).tif');
+src = imread('../../imagens-pdi/images_chapter_04/chapter_4/Fig0441.jpg');
 
 F = fft2(double(src));
 F = fftshift(F);
 
 espectro=log(1+abs(F)); 
 
-figure; 
 subplot(1,2,1);
 imshow(src, [])
 subplot(1,2,2);
@@ -345,7 +355,7 @@ imshow(espectro, []);
 %% Figura 4.42 - ILPF
 home;
 clear;
-src = imread('../pics/chapter_4/Fig0441(a)(characters_test_pattern).tif');
+src = imread('../../imagens-pdi/images_chapter_04/Fig0442.jpg');
 
 [rows, cols] = size(src);
 
@@ -393,7 +403,7 @@ imshow(f)
 
 %% Figura 4.45 - BLPF 
 
-src = imread('../pics/chapter_4/Fig0441(a)(characters_test_pattern).tif');
+src = imread('../../imagens-pdi/images_chapter_04/Fig0445.jpg');
 
 [rows, cols] = size(src);
 
@@ -442,7 +452,7 @@ imshow(f)
 H1 = fftshift(lpfilter('btw', 500, 500, 50, 1));
 H2 = fftshift(lpfilter('btw', 500, 500, 50, 2));
 H3 = fftshift(lpfilter('btw', 500, 500, 50, 5));
-H4 = fftshift(lpfilter('btw', 500, 500, 50, 10));
+H4 = fftshift(lpfilter('btw', 500, 500, 50, 20));
 
 figure; 
 subplot(1,4,1);

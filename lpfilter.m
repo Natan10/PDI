@@ -24,16 +24,17 @@ function H = lpfilter(type, M, N, D0, n)
 D = sqrt(U.^2 + V.^2);
 
 % Begin fiter computations.
-switch type
-case 'ideal'
+  switch type
+  case 'ideal'
    H = double(D <=D0);
-case 'btw'
+  case 'btw'
    if nargin == 4
       n = 1;
    end
    H = 1./(1 + (D./D0).^(2*n));
-case 'gaussian'
+  case 'gaussian'
    H = exp(-(D.^2)./(2*(D0^2)));
-otherwise
+  otherwise
    error('Unknown filter type.')
+  end
 end

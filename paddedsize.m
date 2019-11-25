@@ -15,6 +15,7 @@ function PQ = paddedsize(AB, CD, PARAM)
 %   PQ(1) = PQ(2) = 2^nextpow2(2*m), where m is MAX([AB CD]).
 
 if nargin == 1
+
    PQ = 2*AB;
 elseif nargin == 2 & ~ischar(CD)
    PQ = AB + CD - 1;
@@ -31,4 +32,6 @@ elseif nargin == 3
    PQ = [P, P];
 else
    error('Wrong number of inputs.')
+end
+
 end
