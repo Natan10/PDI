@@ -105,13 +105,60 @@ grad = abs(imgB) + abs(imgC);
 imshow(grad)
 
 =======================================================
-IMG 10.16
+%IMG 10.16
+
+imgA = imread('../../imagens-pdi/images_chapter_10/Fig1016.jpg');
+%Imagem no intervalo de  [0 1]
+imgA = double(imgA)/255;
+%filtro de sobel para as componentes x e y
+maskx = fspecial('sobel');
+masky = maskx';
+
+%aplicaçao do filtro de sobel nas imagens para saber o gradiente
+imgB = imfilter(imgA,maskx);
+imgC = imfilter(imgA,masky);
+imgD = abs(imgB)+abs(imgC);
+
+
+subplot(2,2,1),imshow(imgA);
+subplot(2,2,2),imshow(abs(imgB));
+subplot(2,2,3),imshow(abs(imgC));
+subplot(2,2,4),imshow(imgD);
+
+
 =========================================================
 
-IMG 10.17
-===========================================================
-IMG 10.18
+%IMG 10.17
 
+%Calculo do angulo do gradiente 
+
+angulo = atan(imgB./imgC);
+imshow(angulo)
+
+===========================================================
+%IMG 10.18
+
+imgA = imread('../../imagens-pdi/images_chapter_10/Fig1018.jpg');
+%Imagem no intervalo de  [0 1]
+imgA = double(imgA)/255;
+%filtro de sobel para as componentes x e y
+mask_media = fspecial('average',[5 5]);
+maskx = fspecial('sobel');
+masky = maskx';
+
+%Aplicaçao do filtro de media 5x5
+imgA = conv2(imgA,mask_media);
+
+%aplicaçao do filtro de sobel nas imagens para saber o gradiente
+imgB = imfilter(imgA,maskx);
+imgC = imfilter(imgA,masky);
+imgD = abs(imgB)+abs(imgC);
+
+
+subplot(2,2,1),imshow(imgA);
+subplot(2,2,2),imshow(abs(imgB));
+subplot(2,2,3),imshow(abs(imgC));
+subplot(2,2,4),imshow(imgD);
 =========================================================
 
 %IMG 10.19

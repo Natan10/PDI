@@ -456,13 +456,13 @@ H4 = fftshift(lpfilter('btw', 500, 500, 50, 20));
 
 figure; 
 subplot(1,4,1);
-imshow(H1)
+imshow(abs(H1))
 subplot(1,4,2);
-imshow(H2)
+imshow(abs(H2))
 subplot(1,4,3);
-imshow(H3)
+imshow(abs(H3))
 subplot(1,4,4);
-imshow(H4)
+imshow(abs(H4))
 
 
 =====================================================================================
