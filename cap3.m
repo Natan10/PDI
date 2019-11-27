@@ -66,9 +66,29 @@ endfunction
 
 %IMG 3.14
 
-plano = imread("Fig0314(a)(100-dollars).jpg");
-subplot(3,3,1)
-imshow(plano)
+plano = imread("../../imagens-pdi/images_chapter_03/Fig0314(a)(100-dollars).jpg");
+
+plano1 = bitget(plano,1)*2^0;
+plano2 = bitget(plano,2)*2^1;
+plano3 = bitget(plano,3)*2^2;
+plano4 = bitget(plano,4)*2^3;
+plano5 = bitget(plano,5)*2^4;
+plano6 = bitget(plano,6)*2^5;
+plano7 = bitget(plano,7)*2^6;
+plano8 = bitget(plano,8)*2^7;
+
+
+subplot(3,3,1),imshow(plano);
+subplot(3,3,2),imshow(plano1);
+subplot(3,3,3),imshow(plano2);
+subplot(3,3,4),imshow(plano3);
+subplot(3,3,5),imshow(plano4);
+subplot(3,3,6),imshow(plano5);
+subplot(3,3,7),imshow(plano6);
+subplot(3,3,8),imshow(plano7);
+subplot(3,3,9),imshow(plano8);
+
+
 k = [1 2 3 4 5 6 7 8];
 for i=1:length(k)
   aux = plano_bit(plano,i);
