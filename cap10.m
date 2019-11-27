@@ -181,13 +181,28 @@ imshow(im2)
 %segmentação por detecção de borda.
 
 
-imgA = imread('Fig1025(a)(building_original).jpg');
-imgA = double(imgA)/255;
-filtro = fspecial('log',25,4);
-imgB = conv2(img,filtro,'same');
-imgB = (imgB + abs(min(imgB(:))))/abs(max(imgB(:)));
+imgA = imread("../../imagens-pdi/images_chapter_10/Fig1022.jpg");
+#LoG -> G
+#//Item b)
+std = 4;
+n = 26;
+G = fspecial('log',n,std );
+imgB = conv2(G,imgA);
+# item c)
+threshC = 0;
+imgC =edgeLoG(imgB, threshC, std);
+# item d)
+threshD = max(imgB(:))*0.04;
+imgB = imgB*(255/max(imgB(:)));
 
-INCABADA!!!!
+
+imgD = edgeLoG(imgB, threshD, std);
+
+subplot(2,2,1),imshow(imgA);
+subplot(2,2,2),imshow(imgB,[]);
+subplot(2,2,3),imshow(imgC,[]);
+subplot(2,2,4),imshow(imgD,[]);
+
 
 ============================================================
 %IMG 10.25
@@ -358,21 +373,171 @@ imshow(imgE)
 
 ==================================================================================
 
+%IMG 10.42
 
-IMG 10.42
+a = imread('../pics/chapter_10/Fig1042(a)(septagon_small_noisy_mean_0_stdv_10).tif');
+a = rescale(a);
+
+[Gmag,Gdir] = imgradient(a);
+
+level = prctile(Gmag,[99.7],'all');
+
+c = imbinarize(Gmag,level);
+
+d = immultiply(c,a);
+d = rescale(d);
+
+[counts,binLocations] = imhist(d);
+
+counts(1) = 0;
+
+level = otsuthresh(counts);
+
+e = imbinarize(a, level);
+
+figure; 
+subplot(2,3,1);
+imshow(a, []);
+subplot(2,3,2);
+imhist(a)
+subplot(2,3,3);
+imshow(c, []);
+subplot(2,3,4);
+imshow(d, []);
+subplot(2,3,5);
+stem(binLocations,counts, 'Marker','none');
+subplot(2,3,6);
+imshow(e, []);
+
 
 ============================================================
 
-IMG 10.45
+%IMG 10.45
+
+imgA = imread('../../imagens-pdi/images_chapter_10/Fig1045.jpg');
+imgB = imhist(imgA);
+imgC =imgA;
+
+%Limiar de otsu para a areas
+imgC(imgC <= 80) = 0;
+imgC(imgC < 80 && imgC <= 177 ) = 127;
+imgC(imgC > 177 ) = 255;
+
+subplot(1,3,1),imshow(imgA);
+subplot(1,3,2),area(imgB),xlim([0 255]);
+subplot(1,3,3),imshow(imgC);
+
+
 
 ==========================================================
 
-IMG 10.46
+%IMG 10.46
+
+a = imread('../pics/chapter_10/Fig1046(a)(septagon_noisy_shaded).tif');
+a = rescale(a);
+
+T = alg_thresh(a,10^-3);
+c = imquantize(a,T);
+
+level = graythresh(a);
+d = imquantize(a,level);
+
+[m,n] = size(a);
+
+m = ceil(m/2);
+n = ceil(n/3);
+
+fun = @(block_struct) imquantize(block_struct.data,graythresh(block_struct.data));
+
+f = blockproc(a,[m n],fun);
+
+f = medfilt2(f);
+f = rescale(f);
+level = graythresh(f);
+f = imquantize(f,level);
+
+
+figure; 
+subplot(2,3,1);
+imshow(a, []);
+subplot(2,3,2);
+imhist(a)
+subplot(2,3,3);
+imshow(c, []);
+subplot(2,3,4);
+imshow(d, []);
+subplot(2,3,5);
+imshow(f, []);
+% subplot(2,3,6);
+% imshow(e, []);
+
 
 ===========================================================
-IMG 10.51
+%IMG 10.51
 
+a = imread('../pics/chapter_10/Fig1051(a)(defective_weld).tif');
 
+c = imquantize(a,254);
+c = rescale(c);
+
+c = 1 - c;
+[x,y] = find(c==0);
+
+[m,n] = size(c);
+
+d = zeros(m,n);
+
+for i = 1:size(x)
+    BW = grayconnected(c,x(i),y(i));
+    d = d + bwmorph(BW,'shrink',Inf);
+end
+
+d = imbinarize(d,0.1);
+
+a = rescale(a);
+c = rescale(c);
+e = imabsdiff(a,c);
+e = 1 - e;
+c = 1 - c;
+e = c + e;
+e = 1 - e;
+c = 1 - c;
+
+level = multithresh(e,2);
+g = imquantize(e,level);
+h = imquantize(e,min(level));
+
+[x,y] = find(d==1);
+
+[m,n] = size(h);
+
+i = zeros(m,n);
+for j = 1:size(x)
+    i = i + regiongrowing(1-h,x(j),y(j));
+end
+
+figure; 
+subplot(3,3,1);
+imshow(a, []);
+subplot(3,3,2);
+imhist(a)
+subplot(3,3,3);
+imshow(c, []);
+subplot(3,3,4);
+imshow(d);
+subplot(3,3,5);
+imshow(e, []);
+subplot(3,3,6);
+imhist(e);
+subplot(3,3,7);
+imshow(g,[]);
+subplot(3,3,8);
+imshow(h, []);
+subplot(3,3,9);
+imshow(i, []);
+
+figure;
+imshow(d);
 
 
 
