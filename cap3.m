@@ -21,6 +21,7 @@ title('gamma 0.3')
 ==========================================================
 
 %IMG 3.12
+img = imread("../../imagens-pdi/images_chapter_03/Fig0312(a)(kidney).jpg");
 subplot(1,3,1)
 imshow(img)
 subplot(1,3,2)
@@ -343,6 +344,16 @@ imshow(IMAGE_AGUCADA_8)
 
 ==========================================================================================
 %IMG 3.42
+
+img = imread("../../imagens-pdi/images_chapter_03/Fig0342(a)(contact_lens_original).jpg");
+kx = [-1 -2 -1;0 0 0;1 2 1];
+ky = [-1 0 1;-2 0 2;-1 0 1];
+gy = imfilter(img,ky);
+gx = imfilter(img,kx);
+M = abs(gx) + abs(gy);
+
+subplot(1,2,1),imshow(img);
+subplot(1,2,2),imshow(M);
 
 ==========================================================================================
 

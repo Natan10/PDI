@@ -21,7 +21,7 @@ imshow(255*ceil(img/255));
 =====================================================================
 %IMG 2.26
 
-img = imread('Fig0226(galaxy_pair_original).tif');
+img = imread('../../imagens-pdi/images_chapter_02/Fig0226(galaxy_pair_original).jpg');
 k = [1 5 10 20 50 100];
 
 for i=1:length(k)
@@ -38,13 +38,16 @@ endfor
 %IMG 2.27
 
 pkg load image
-img27 = imread('Fig0227.jpg');
+img27 = imread('../../imagens-pdi/images_chapter_02/Fig0227(a)(infra).jpg');
 
 bit1 = bitget(img27,1);
 img27b = img27;
 %//img27b(:,:) = (img27(:,:) - bit1(:,:) );
 img27b = imsubtract(img27,uint8(bit1));
 img27c = imsubtract(img27,img27b);
+
+subplot(1,3,1),imshow(img27);
+subplot(1,3,2),imshow(i);
 imshow(img27c,[]);
 
 
@@ -86,7 +89,7 @@ subplot(1,3,3),imshow(imgC);
 =====================================================================
 %IMG 2.32
 
-imgA = imread('Fig0232(a)(partial_body_scan).jpg');
+imgA = imread('../../imagens-pdi/images_chapter_02/Fig0232(a)(partial_body_scan).jpg');
 
 %Complemento de A
 imgB = 255 - imgA;
@@ -107,7 +110,7 @@ subplot(1,3,3),imshow(imgC);
 
 =====================================================================
 %IMG 2.36
-img;
+img = imread("../../imagens-pdi/images_chapter_02/Fig0236(a)(letter_T).jpg");
 subplot(1,4,1)
 imshow(img)
 subplot(1,4,2)

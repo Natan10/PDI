@@ -291,7 +291,13 @@ subplot(3,3,8),imshow(g, []);
 
 %IMG 4.38
 
-img38 = imread('.\jpg\Fig0438.jpg');
+img38 = imread('../../imagens-pdi/images_chapter_03/jpg\Fig0438.jpg');
+aux = abs(fftshift(fft2(img38)));
+imgB = log(aux+1);
+
+subplot(1,2,1),imshow(img38);
+subplot(1,2,2),imshow(mat2gray(imgB));
+
 
 imshow(img38,[])
 #{
@@ -337,7 +343,7 @@ imshow(abs(H), [])
 
 %% Figura 4.41 - Espectro de Fourier
 
-src = imread('../../imagens-pdi/images_chapter_04/chapter_4/Fig0441.jpg');
+src = imread('../../imagens-pdi/images_chapter_04/Fig0441.jpg');
 
 F = fft2(double(src));
 F = fftshift(F);
